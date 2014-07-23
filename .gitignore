@@ -1,0 +1,17 @@
+
+#ingonre these files
+vim74/*.*
+vim74/autoload/*
+vim74/color/*
+vim74/compiler/*
+vim74/doc/*
+vim74/ftpplugin/*
+vim74/indent/*
+vim74/keymap/*
+vim74/lang/*
+vim74/macros/*
+vim74/plugin/*
+vim74/spell/*
+vim74/syntax/*
+vim74/tools/*
+vim74/tutor/*

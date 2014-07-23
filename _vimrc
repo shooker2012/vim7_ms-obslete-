@@ -89,8 +89,14 @@ if !exists(":DiffOrig")
 endif
 
 set number
+
+" [plugin]pathogen config
 execute pathogen#infect()
 
+" [plugin]solarized config
 syntax enable
 set background=dark
 colorscheme solarized
+
+" [plugin]commentary config
+autocmd FileType lua set commentstring=--\ %s
