@@ -2,10 +2,10 @@
 #ingonre these files
 vim74/*.*
 vim74/autoload/*
-vim74/color/*
+vim74/colors/*
 vim74/compiler/*
 vim74/doc/*
-vim74/ftpplugin/*
+vim74/ftplugin/*
 vim74/indent/*
 vim74/keymap/*
 vim74/lang/*
