@@ -18,4 +18,3 @@ vim74/tutor/*
 *.zip
 *.swp
 !vim74/ctags.exe
-vim74/tags
