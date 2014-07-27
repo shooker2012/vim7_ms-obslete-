@@ -30,6 +30,7 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+set hlsearch
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -103,3 +104,20 @@ autocmd FileType lua set commentstring=--\ %s
 
 "[plugin]tagbar config
 nnoremap <silent> <F4> :TagbarToggle<CR>
+
+"[plugin]ctags config
+set autochdir
+
+"shortcut
+nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
+
+" In visual mode, map* and # to search current selected.
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+	let @s = temp
+endfunction

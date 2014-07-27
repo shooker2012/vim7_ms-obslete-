@@ -17,5 +17,9 @@ vim74/tools/*
 vim74/tutor/*
 *.zip
 *.swp
-!vim74/ctags.exe
 vim74/tags
+
+
+!vim74/ctags.exe
+!vim74/autoload/pathogen.vim
+!vim74/autoload/textobj
