@@ -121,3 +121,19 @@ function! s:VSetSearch()
 	let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
 	let @s = temp
 endfunction
+
+"map & to :&&. means reapeat the last :substitute command with flags.
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+"[plugin]neocomplcache installation
+let g:neocomplcache_enable_at_startup = 1
+
+"[plugin]clang_complete
+let g:clang_complete_copen=1
+let g:clang_periodic_quickfix=1
+let g:clang_snippets=1
+let g:clang_close_preview=1
+let g:clang_use_library=1
+let g:clang_library_path="D:\\Program\ Files\ (x86)\\LLVM\\bin"
+let g:clang_user_options='-stdlib=libc++ -std=c++11 -IIncludePath'
