@@ -151,3 +151,7 @@ let g:clang_close_preview=1
 let g:clang_use_library=1
 let g:clang_library_path="D:\\Program\ Files\ (x86)\\LLVM\\bin"
 let g:clang_user_options='-stdlib=libc++ -std=c++11 -IIncludePath'
+
+"[plugin]SuperTab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
