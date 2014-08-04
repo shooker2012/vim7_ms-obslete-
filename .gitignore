@@ -17,6 +17,7 @@ vim74/tools/*
 vim74/tutor/*
 *.zip
 *.swp
+_vimrc~
 vim74/tags
 
 
