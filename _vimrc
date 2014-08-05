@@ -105,6 +105,11 @@ source $VIMRUNTIME/delmenu.vim
 set guifont=Consolas:h12
 set guifontwide=NSimSun:h12
 
+"remove scratch preview window
+set completeopt-=preview
+
+"set list char
+set listchars=tab:→→,trail:□
 
 " [plugin]pathogen config
 execute pathogen#infect()
