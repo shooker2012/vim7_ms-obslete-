@@ -111,6 +111,12 @@ set completeopt-=preview
 "set list char
 set listchars=tab:→→,trail:□
 
+"set swap files directory
+set directory=$TEMP
+
+"set backup files directory
+set backupdir=$TEMP
+
 " [plugin]pathogen config
 execute pathogen#infect()
 
