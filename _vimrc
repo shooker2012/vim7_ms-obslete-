@@ -99,7 +99,7 @@ set fileencoding=utf-8
 set encoding=utf-8
 lang messages zh_CN.UTF-8 "解决console输入乱码
 set termencoding=utf-8
-set fileencodings=utf-8,ucs-bom,shift-jis,latin1,big5,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,cp936,ucs-bom,shift-jis,latin1,big5,gb18030,gbk,gb2312
 
 source $VIMRUNTIME/delmenu.vim
 set guifont=Consolas:h12
@@ -116,6 +116,15 @@ set directory=$TEMP
 
 "set backup files directory
 set backupdir=$TEMP
+
+"map , to copy and pase
+nnoremap <silent> , "*
+vnoremap <silent> , "*
+
+"set syntax rules for glsl and hlsl
+au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
+au BufNewFile,BufRead *.hlsl,*.fx,*.fxh,*.vsh,*.psh setf fx
+
 
 " [plugin]pathogen config
 execute pathogen#infect()

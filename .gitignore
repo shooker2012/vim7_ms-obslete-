@@ -24,3 +24,5 @@ vim74/tags
 !vim74/ctags.exe
 !vim74/autoload/pathogen.vim
 !vim74/autoload/textobj
+!vim74/syntax/fx.vim
+!vim74/syntax/glsl.vim
