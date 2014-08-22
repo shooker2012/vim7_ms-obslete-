@@ -141,7 +141,7 @@ autocmd FileType lua set commentstring=--\ %s
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
 "[plugin]ctags config
-set autochdir
+" set autochdir
 
 "shortcut
 nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
