@@ -141,7 +141,7 @@ autocmd FileType lua set commentstring=--\ %s
 nnoremap <silent> <F4> :TagbarToggle<CR>
 
 "[plugin]ctags config
-" set autochdir
+set autochdir
 
 "shortcut
 nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
@@ -194,3 +194,23 @@ map <Leader>W <Plug>(easymotion-W)
 map <Leader>b <Plug>(easymotion-b)
 map <Leader>B <Plug>(easymotion-B)
 
+"[tool]grep for windows
+set grepprg=grep\ -n\ -r\ $*\ *
+
+function! s:CustomGrepWithType(...)
+	let cmdStr = ""
+	for s in a:000
+		let cmdStr =cmdStr.s." "
+	endfor
+	exe "grep! --include=".cmdStr
+endfunction
+command! -nargs=* Grep call s:CustomGrepWithType(<f-args>)
+
+"[function]ChangProjDir: When Open .vimproj file, change current directory
+"and NerdTree to the folder of the file.
+function s:ChangeProjDir()
+	cd %:p:h
+	NERDTree %:p:h
+endfunc
+autocmd BufReadPost *.vimproj call s:ChangeProjDir()
+autocmd BufReadPost _vimproj call s:ChangeProjDir()
