@@ -94,6 +94,9 @@ set number
 set tabstop=4
 set shiftwidth=4
 
+"Use system clipboard default
+set clipboard=unnamed
+
 "set encoding
 set fileencoding=utf-8
 set encoding=utf-8
@@ -102,7 +105,7 @@ set termencoding=utf-8
 set fileencodings=utf-8,cp936,ucs-bom,shift-jis,latin1,big5,gb18030,gbk,gb2312
 
 source $VIMRUNTIME/delmenu.vim
-set guifont=Consolas:h12
+set guifont=Consolas:h11
 set guifontwide=NSimSun:h12
 
 "remove scratch preview window
@@ -118,8 +121,8 @@ set directory=$TEMP
 set backupdir=$TEMP
 
 "map , to copy and pase
-nnoremap <silent> , "*
-vnoremap <silent> , "*
+nnoremap <silent> , "0
+vnoremap <silent> , "0
 
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
@@ -199,18 +202,39 @@ set grepprg=grep\ -n\ -r\ $*\ *
 
 function! s:CustomGrepWithType(...)
 	let cmdStr = ""
-	for s in a:000
-		let cmdStr =cmdStr.s." "
-	endfor
-	exe "grep! --include=".cmdStr
+	let index = 1
+	while index < a:0
+		let cmdStr =cmdStr." --include=".a:{index}
+		let index += 1
+	endwhile
+	let cmdStr =cmdStr." ".a:{index}
+
+	"Save current grepprg and use the default grepprg in CustomGrep
+	let tempPrg=&grepprg
+	set grepprg=grep\ -n\ -r\ $*\ *
+	exe "grep! ".cmdStr
+
+	"Restore current grepprg
+	exe "set grepprg=".escape(tempPrg," ")
 endfunction
 command! -nargs=* Grep call s:CustomGrepWithType(<f-args>)
 
 "[function]ChangProjDir: When Open .vimproj file, change current directory
 "and NerdTree to the folder of the file.
-function s:ChangeProjDir()
+function s:ChangeProjDir(...)
+	set noautochdir
 	cd %:p:h
 	NERDTree %:p:h
+
+	" Project custom config
+	if a:0 > 0
+		if a:1 == "lua"
+			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+		endif
+	endif
+
 endfunc
+
+autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua")
 autocmd BufReadPost *.vimproj call s:ChangeProjDir()
 autocmd BufReadPost _vimproj call s:ChangeProjDir()
