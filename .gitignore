@@ -26,3 +26,5 @@ vim74/tags
 !vim74/autoload/textobj
 !vim74/syntax/fx.vim
 !vim74/syntax/glsl.vim
+!vim74/ftplugin/mkd.vim
+!vim74/syntax/mkd.vim
