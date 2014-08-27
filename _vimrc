@@ -197,6 +197,9 @@ map <Leader>W <Plug>(easymotion-W)
 map <Leader>b <Plug>(easymotion-b)
 map <Leader>B <Plug>(easymotion-B)
 
+"[plugin]Auto-paris
+let g:AutoPairsMapSpace=0
+
 "[tool]grep for windows
 set grepprg=grep\ -n\ -r\ $*\ *
 
