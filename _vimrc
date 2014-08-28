@@ -233,6 +233,7 @@ function s:ChangeProjDir(...)
 	if a:0 > 0
 		if a:1 == "lua"
 			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+			copen
 		endif
 	endif
 
@@ -241,3 +242,6 @@ endfunc
 autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua")
 autocmd BufReadPost *.vimproj call s:ChangeProjDir()
 autocmd BufReadPost _vimproj call s:ChangeProjDir()
+
+" map F3 to search selected
+vnoremap <F3> :y<ESC>:grep! <C-R>"<CR><CR>
