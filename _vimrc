@@ -149,8 +149,11 @@ set autochdir
 "shortcut
 nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
 
+" search and hightlight, but not move the next matching
+nnoremap * *N
+
 " In visual mode, map* and # to search current selected.
-xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>N
 xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
 
 function! s:VSetSearch()
@@ -244,4 +247,14 @@ autocmd BufReadPost *.vimproj call s:ChangeProjDir()
 autocmd BufReadPost _vimproj call s:ChangeProjDir()
 
 " map F3 to search selected
-vnoremap <F3> :y<ESC>:grep! <C-R>"<CR><CR>
+function! s:EscapeForSearch()
+	let @/ = '"' . escape(@", '/\ "') . '"'
+endfunction
+function! s:EscapeForSearchVisual()
+	let temp = @s
+	norm! gv"sy
+	let @/ = '"' . substitute( escape(@s, '/\ "'), '\n', '\\n', 'g' ) . '"'
+	let @s = temp
+endfunction
+nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:grep! <C-R>=@/<CR><CR>
+xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:grep! <C-R>=@/<CR><CR>
