@@ -124,6 +124,10 @@ set backupdir=$TEMP
 nnoremap <silent> , "0
 vnoremap <silent> , "0
 
+"map F10 to open current file's folder
+nnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
+vnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
+
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
 au BufNewFile,BufRead *.hlsl,*.fx,*.fxh,*.vsh,*.psh setf fx
