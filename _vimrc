@@ -128,6 +128,9 @@ vnoremap <silent> , "0
 nnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
 vnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
 
+"map F9 to create a new tab and open currentfile and mirror NERDTREE
+nnoremap <silent> <F9> :tabe %<CR>:NERDTreeMirror<CR><C-W>l
+
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
 au BufNewFile,BufRead *.hlsl,*.fx,*.fxh,*.vsh,*.psh setf fx
@@ -149,6 +152,9 @@ nnoremap <silent> <F4> :TagbarToggle<CR>
 
 "[plugin]ctags config
 set autochdir
+
+"[plugin]Nerdtree
+let NERDTreeShowBookmarks=1
 
 "shortcut
 nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
