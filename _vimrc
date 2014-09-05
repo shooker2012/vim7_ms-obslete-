@@ -221,7 +221,7 @@ function! s:CustomGrepWithType(...)
 
 	"Save current grepprg and use the default grepprg in CustomGrep
 	let tempPrg=&grepprg
-	set grepprg=grep\ -n\ -r\ $*\ *
+	set grepprg=grep\ -C\ 1\ -n\ -r\ $*\ *
 	exe "silent grep! ".cmdStr
 
 	"Restore current grepprg
@@ -239,7 +239,7 @@ function s:ChangeProjDir(...)
 	" Project custom config
 	if a:0 > 0
 		if a:1 == "lua"
-			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+			set grepprg=grep\ -C\ 1\ -n\ -r\ --include=*.lua\ $*\ *
 			copen
 
 			nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/e/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
