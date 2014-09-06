@@ -125,11 +125,11 @@ nnoremap <silent> , "0
 vnoremap <silent> , "0
 
 "map F10 to open current file's folder
-nnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
-vnoremap <silent> <F10> :!start explorer.exe %:p:h<CR><CR>
+nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
+vnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 
 "map F9 to create a new tab and open currentfile and mirror NERDTREE
-nnoremap <silent> <F9> :tabe %<CR>:NERDTreeMirror<CR><C-W>l
+nnoremap <silent> <F9> :tabe %<CR>:NERDTreeMirror<CR><C-W>l:copen<CR>
 
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
