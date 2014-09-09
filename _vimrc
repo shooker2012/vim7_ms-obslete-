@@ -227,7 +227,7 @@ function! s:CustomGrepWithType(...)
 
 	"Save current grepprg and use the default grepprg in CustomGrep
 	let tempPrg=&grepprg
-	set grepprg=grep\ -C\ 1\ -n\ -r\ $*\ *
+	set grepprg=grep\ -n\ -r\ $*\ *
 	exe "silent grep! ".cmdStr
 
 	"Restore current grepprg
