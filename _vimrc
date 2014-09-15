@@ -211,7 +211,11 @@ map <Leader>b <Plug>(easymotion-b)
 map <Leader>B <Plug>(easymotion-B)
 
 "[plugin]Auto-paris
+let g:AutoPairsShortcutFastWrap='<M-m>'
 let g:AutoPairsMapSpace=0
+
+"[plugin]
+let NERDMenuMode=1
 
 "[tool]grep for windows
 set grepprg=grep\ -n\ -r\ $*\ *
