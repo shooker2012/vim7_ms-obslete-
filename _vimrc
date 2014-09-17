@@ -249,7 +249,7 @@ function s:ChangeProjDir(...)
 	" Project custom config
 	if a:0 > 0
 		if a:1 == "lua"
-			set grepprg=grep\ -C\ 1\ -n\ -r\ --include=*.lua\ $*\ *
+			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
 			copen
 			autocmd BufRead *.lua UpdateTypesFileOnly
 
