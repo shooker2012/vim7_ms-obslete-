@@ -129,7 +129,7 @@ nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 vnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 
 "map F9 to create a new tab and open currentfile and mirror NERDTREE
-nnoremap <silent> <F9> :tabe %<CR>:NERDTreeMirror<CR><C-W>l:copen<CR>
+nnoremap <silent> <F9> :tabe %<CR>:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
 
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
@@ -223,15 +223,21 @@ set grepprg=grep\ -n\ -r\ $*\ *
 function! s:CustomGrepWithType(...)
 	let cmdStr = ""
 	let index = 1
+	let customGrepPrg="grep -H -n -r $* *"
 	while index < a:0
-		let cmdStr =cmdStr." --include=".a:{index}
+		if a:1 == "%"
+			let customGrepPrg="grep -H -n -r $* \\\"".expand("%:.")."\\\""
+		else
+			let cmdStr =cmdStr." --include=".a:{index}
+		endif
+
 		let index += 1
 	endwhile
 	let cmdStr =cmdStr." ".a:{index}
 
 	"Save current grepprg and use the default grepprg in CustomGrep
 	let tempPrg=&grepprg
-	set grepprg=grep\ -n\ -r\ $*\ *
+	exe "set grepprg=".escape(customGrepPrg," ")
 	exe "silent grep! ".cmdStr
 
 	"Restore current grepprg
