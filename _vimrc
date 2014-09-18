@@ -155,6 +155,7 @@ set autochdir
 
 "[plugin]Nerdtree
 let NERDTreeShowBookmarks=1
+let NERDMenuMode=1
 
 "shortcut
 nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
@@ -214,8 +215,8 @@ map <Leader>B <Plug>(easymotion-B)
 let g:AutoPairsShortcutFastWrap='<M-m>'
 let g:AutoPairsMapSpace=0
 
-"[plugin]
-let NERDMenuMode=1
+"[plugin]ag
+let g:aghighlight=1
 
 "[tool]grep for windows
 set grepprg=grep\ -n\ -r\ $*\ *
