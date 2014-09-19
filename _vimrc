@@ -292,4 +292,4 @@ function! s:EscapeForSearchVisual()
 	let @s = temp
 endfunction
 nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent Ag! <C-R>=@/<CR><CR>
-xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
+xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent Ag! <C-R>=@/<CR><CR>
