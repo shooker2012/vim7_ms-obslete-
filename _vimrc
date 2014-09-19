@@ -219,8 +219,8 @@ let g:AutoPairsMapSpace=0
 let g:aghighlight=1
 
 "[tool]grep for windows
-" set grepprg=grep\ -n\ -r\ $*\ *
-set grepprg=ag\ --column
+set grepprg=grep\ -n\ -r\ $*\ *
+" set grepprg=ag\ --column
 
 function! s:CustomGrepWithType(...)
 	let cmdStr = ""
@@ -257,8 +257,8 @@ function s:ChangeProjDir(...)
 	" Project custom config
 	if a:0 > 0
 		if a:1 == "lua"
-			" set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
-			set grepprg=ag\ --column
+			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+			" set grepprg=ag\ --column
 
 			let g:agprg="ag --column -G .*\\.lua"
 
@@ -291,5 +291,23 @@ function! s:EscapeForSearchVisual()
 	let @/ = '"' . substitute( escape(@s, '/\ "'), '\n', '\\n', 'g' ) . '"'
 	let @s = temp
 endfunction
-nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent Ag! <C-R>=@/<CR><CR>
-xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent Ag! <C-R>=@/<CR><CR>
+nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! <C-R>=@/<CR><CR>
+xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
+
+" map quick fix window.
+function! s:MapQuickFixWindow()
+	botright copen
+	nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
+	nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
+	nnoremap <silent> <buffer> o  <CR>
+	nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
+	nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
+	nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
+
+	nnoremap <silent> <buffer> e <CR><C-w><C-w>:cclose<CR>'
+	nnoremap <silent> <buffer> go <CR>:copen<CR>
+	nnoremap <silent> <buffer> q  :cclose<CR>
+	nnoremap <silent> <buffer> gv :let b:height=winheight(0)<CR><C-w><CR><C-w>H:copen<CR><C-w>J:exe printf(":normal %d\<lt>c-w>_", b:height)<CR>
+endfunc
+call <SID>MapQuickFixWindow()
+
