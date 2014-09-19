@@ -219,7 +219,8 @@ let g:AutoPairsMapSpace=0
 let g:aghighlight=1
 
 "[tool]grep for windows
-set grepprg=grep\ -n\ -r\ $*\ *
+" set grepprg=grep\ -n\ -r\ $*\ *
+set grepprg=ag\ --column
 
 function! s:CustomGrepWithType(...)
 	let cmdStr = ""
@@ -256,14 +257,15 @@ function s:ChangeProjDir(...)
 	" Project custom config
 	if a:0 > 0
 		if a:1 == "lua"
-			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+			" set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+			set grepprg=ag\ --column
+
+			let g:agprg="ag --column -G .*\\.lua"
+
 			copen
 			autocmd BufRead *.lua UpdateTypesFileOnly
 
 			nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/n/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
-			" nnoremap <silent> <F5> :!ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/e/" --regex-MYLUA="/^\s*module\s+\"(\w+)\".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\"[a-zA-Z0-9._]+\.(\w+)\".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
-			
-			let g:agprg="ag --column -G .*\\.lua"
 		endif
 	endif
 
@@ -275,7 +277,13 @@ autocmd BufReadPost _vimproj call s:ChangeProjDir()
 
 " map F3 to search selected
 function! s:EscapeForSearch()
-	let @/ = '"' . escape(@", '/\ "') . '"'
+	if @" != "" 
+		let @/ = '"' . escape(@", '/\ "') . '"'
+	else
+		if @/ == ""
+			let @/ = "something for nothing!!!"
+		endif
+	endif
 endfunction
 function! s:EscapeForSearchVisual()
 	let temp = @s
@@ -283,5 +291,5 @@ function! s:EscapeForSearchVisual()
 	let @/ = '"' . substitute( escape(@s, '/\ "'), '\n', '\\n', 'g' ) . '"'
 	let @s = temp
 endfunction
-nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! <C-R>=@/<CR><CR>
+nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent Ag! <C-R>=@/<CR><CR>
 xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
