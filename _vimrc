@@ -249,31 +249,31 @@ command! -nargs=* Grep call s:CustomGrepWithType(<f-args>)
 
 "[function]ChangProjDir: When Open .vimproj file, change current directory
 "and NerdTree to the folder of the file.
-function s:ChangeProjDir(...)
-	set noautochdir
-	cd %:p:h
-	NERDTree %:p:h
-
-	" Project custom config
-	if a:0 > 0
-		if a:1 == "lua"
-			set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
-			" set grepprg=ag\ --column
-
-			let g:agprg="ag --column -G .*\\.lua"
-
-			copen
-			autocmd BufRead *.lua UpdateTypesFileOnly
-
-			nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/n/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
-		endif
+function s:ChangeProjDir( type, isChangeDir )
+	if a:isChangeDir == 1
+		set noautochdir
+		cd %:p:h
+		NERDTree %:p:h
 	endif
 
-endfunc
+	" Project custom config
+	if a:type == "lua"
+		set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+		" set grepprg=ag\ --column
 
-autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua")
-autocmd BufReadPost *.vimproj call s:ChangeProjDir()
-autocmd BufReadPost _vimproj call s:ChangeProjDir()
+		let g:agprg="ag --column -G .*\\.lua"
+
+		copen
+		autocmd BufRead *.lua UpdateTypesFileOnly
+
+		nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/n/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
+	endif
+endfunc
+command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>, 0)
+
+autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua", 1)
+autocmd BufReadPost *.vimproj call s:ChangeProjDir("", 1)
+autocmd BufReadPost _vimproj call s:ChangeProjDir("", 1)
 
 " map F3 to search selected
 function! s:EscapeForSearch()
