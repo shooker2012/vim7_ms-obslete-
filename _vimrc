@@ -158,7 +158,8 @@ let NERDTreeShowBookmarks=1
 let NERDMenuMode=1
 
 "shortcut
-nnoremap <silent> <C-l>	:<C-u>nohlsearch<CR><C-l>
+nnoremap <silent> <unique> <C-l> :<C-u>nohlsearch<CR>:<C-u>MarkClear<CR><C-l>
+nnoremap <silent> <unique> <C-k> :<C-u>Mark<CR>
 
 " search and hightlight, but not move the next matching
 nnoremap * *N
@@ -217,6 +218,10 @@ let g:AutoPairsMapSpace=0
 
 "[plugin]ag
 let g:aghighlight=1
+
+"[plugin]mark
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 
 "[tool]grep for windows
 set grepprg=grep\ -n\ -r\ $*\ *
