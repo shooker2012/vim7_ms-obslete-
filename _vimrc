@@ -299,6 +299,10 @@ endfunction
 nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! <C-R>=@/<CR><CR>
 xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
 
+" map F2 to search selected in current file
+nnoremap <F2> :vim /<C-R>=@"<CR>/j %<CR>
+xnoremap <F2> :vim /<C-R>=@/<CR>/j %<CR>
+
 " map quick fix window.
 function! s:MapQuickFixWindow()
 	botright copen
