@@ -303,6 +303,9 @@ xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<
 nnoremap <F2> :vim /<C-R>=@"<CR>/j %<CR>
 xnoremap <F2> :vim /<C-R>=@/<CR>/j %<CR>
 
+" map ctrl-r + register not auto-indent in insert mode
+inoremap <C-R> <C-R><C-O>
+
 " map quick fix window.
 function! s:MapQuickFixWindow()
 	botright copen
