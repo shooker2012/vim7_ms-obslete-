@@ -216,6 +216,10 @@ map <Leader>w <Plug>(easymotion-w)
 map <Leader>W <Plug>(easymotion-W)
 map <Leader>b <Plug>(easymotion-b)
 map <Leader>B <Plug>(easymotion-B)
+map <Leader>e <Plug>(easymotion-e)
+map <Leader>E <Plug>(easymotion-E)
+map <Leader>ge <Plug>(easymotion-ge)
+map <Leader>gE <Plug>(easymotion-gE)
 
 "[plugin]Auto-paris
 let g:AutoPairsShortcutFastWrap='<M-m>'
