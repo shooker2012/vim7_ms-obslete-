@@ -202,6 +202,11 @@ let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap s <Plug>(easymotion-s)
 nmap s <Plug>(easymotion-s2)
+xmap s <Plug>(easymotion-s)
+xmap s <Plug>(easymotion-s2)
+omap z <Plug>(easymotion-s)
+omap z <Plug>(easymotion-s2)
+
 let g:EasyMotion_smartcase = 1
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
