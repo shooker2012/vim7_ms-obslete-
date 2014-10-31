@@ -236,6 +236,52 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 set grepprg=grep\ -n\ -r\ $*\ *
 " set grepprg=ag\ --column
 
+function! s:EscapeForWindowsCMDC( str )
+	let strlen = strlen( a:str )
+	let hasQuotes = 0
+	if a:str[0] == '"' && a:str[strlen-1] == '"'
+		let keyword = strpart( a:str, 1, strlen-2 )
+		let hasQuotes = 1
+	else
+		let keyword = a:str
+		let keyword = escape( keyword, '/\ "%' )
+	endif
+
+	" escape for grep and ag
+	let keyword = escape( keyword, '-' )
+
+	" escape for cmdc
+	let keyword = substitute( keyword, "\\^", "^^", "g" )
+	let keyword = substitute( keyword, '"', '^"', "g" )
+	let keyword = substitute( keyword, '(', '^(', "g" )
+	let keyword = substitute( keyword, ')', '^)', "g" )
+
+	if hasQuotes == 1
+		let keyword ='"'.keyword.'"'
+	endif
+
+	return keyword
+endfunction
+" command! -nargs=* TestEsc call s:EscapeForWindowsCMDC(<f-args>)
+
+function! s:CustomGrep(...)
+	let cmdStr = ""
+	let index = 1
+	while index < a:0
+		let cmdStr = cmdStr." ".a:{index}
+		let index += 1
+	endwhile
+
+	let keyword = a:{index}
+	let keyword = s:EscapeForWindowsCMDC(keyword)
+	let cmdStr =cmdStr." ".keyword
+
+	" echo cmdStr
+	let @" = cmdStr
+	exe "grep! ".cmdStr
+endfunction
+command! -nargs=* Grep call s:CustomGrep(<f-args>)
+
 function! s:CustomGrepWithType(...)
 	let cmdStr = ""
 	let index = 1
@@ -259,7 +305,28 @@ function! s:CustomGrepWithType(...)
 	"Restore current grepprg
 	exe "set grepprg=".escape(tempPrg," ")
 endfunction
-command! -nargs=* Grep call s:CustomGrepWithType(<f-args>)
+command! -nargs=* GrepT call s:CustomGrepWithType(<f-args>)
+
+" [plugin]ag
+let g:ag_apply_qmappings=0
+let g:ag_apply_lmappings=0
+let g:aghighlight=1
+
+function! s:CustomAcg(...)
+	let cmdStr = ""
+	let index = 1
+	while index < a:0
+		let cmdStr = cmdStr." ".a:{index}
+		let index += 1
+	endwhile
+
+	let keyword = a:{index}
+	let keyword = s:EscapeForWindowsCMDC(keyword)
+	let cmdStr =cmdStr." ".keyword
+
+	exe "Ag! ".cmdStr
+endfunction
+command! -nargs=* Acg call s:CustomAcg(<f-args>)
 
 "[function]ChangProjDir: When Open .vimproj file, change current directory
 "and NerdTree to the folder of the file.
@@ -292,7 +359,8 @@ autocmd BufReadPost _vimproj call s:ChangeProjDir("", 1)
 " map F3 to search selected
 function! s:EscapeForSearch()
 	if @" != "" 
-		let @/ = '"' . escape(@", '/\ "') . '"'
+		let @/ = '"' . escape(@", '/\ "%') . '"'
+		let @/ = s:EscapeForWindowsCMDC( @/ )
 	else
 		if @/ == ""
 			let @/ = "something for nothing!!!"
@@ -302,11 +370,12 @@ endfunction
 function! s:EscapeForSearchVisual()
 	let temp = @s
 	norm! gv"sy
-	let @/ = '"' . substitute( escape(@s, '/\ "'), '\n', '\\n', 'g' ) . '"'
+	let @/ = s:EscapeForWindowsCMDC( @" )
+	let @/ = substitute( @/, '\n', '\\n', 'g' )
 	let @s = temp
 endfunction
-nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! <C-R>=@/<CR><CR>
-xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
+nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! -F <C-R>=@/<CR><CR>
+xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! -F <C-R>=@/<CR><CR>
 
 " map F2 to search selected in current file
 nnoremap <F2> :vim //j %<CR>
@@ -323,7 +392,7 @@ function! s:MapQuickFixWindow()
 	nnoremap <silent> <buffer> o  <CR>
 	nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
 	nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
-	nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
+	" nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
 
 	nnoremap <silent> <buffer> e <CR><C-w><C-w>:cclose<CR>'
 	nnoremap <silent> <buffer> go <CR>:copen<CR>
