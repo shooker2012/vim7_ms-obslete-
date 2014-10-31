@@ -236,6 +236,24 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 set grepprg=grep\ -n\ -r\ $*\ *
 " set grepprg=ag\ --column
 
+function! s:EscapeForGrepAndAg( word )
+	" escape for grep and ag
+	let word = escape( a:word, '-' )
+
+	return word
+endfunction
+
+function! s:EscapeForCMDC( word )
+	" escape for windows cmd : cmd.exe /C "%s"
+	let word = substitute( a:word, "\\^", "^^", "g" )
+	let word = substitute( word, '"', '^"', "g" )
+	let word = substitute( word, "'", "^'", "g" )
+	let word = substitute( word, '(', '^(', "g" )
+	let word = substitute( word, ')', '^)', "g" )
+
+	return word
+endfunction
+
 function! s:EscapeForWindowsCMDC( str )
 	let strlen = strlen( a:str )
 	let hasQuotes = 0
@@ -245,20 +263,19 @@ function! s:EscapeForWindowsCMDC( str )
 	else
 		let keyword = a:str
 		let keyword = escape( keyword, '/\ "%' )
+		let @" = keyword
+		" let keyword = fnameescape( keyword )
 	endif
 
 	" escape for grep and ag
-	let keyword = escape( keyword, '-' )
-
-	" escape for cmdc
-	let keyword = substitute( keyword, "\\^", "^^", "g" )
-	let keyword = substitute( keyword, '"', '^"', "g" )
-	let keyword = substitute( keyword, '(', '^(', "g" )
-	let keyword = substitute( keyword, ')', '^)', "g" )
+	let keyword = s:EscapeForGrepAndAg( keyword )
 
 	if hasQuotes == 1
 		let keyword ='"'.keyword.'"'
 	endif
+
+	" escape for cmdc
+	let keyword = s:EscapeForCMDC( keyword )
 
 	return keyword
 endfunction
@@ -274,7 +291,7 @@ function! s:CustomGrep(...)
 
 	let keyword = a:{index}
 	let keyword = s:EscapeForWindowsCMDC(keyword)
-	let cmdStr =cmdStr." ".keyword
+	let cmdStr = cmdStr." ".keyword
 
 	" echo cmdStr
 	let @" = cmdStr
@@ -295,10 +312,13 @@ function! s:CustomGrepWithType(...)
 
 		let index += 1
 	endwhile
-	let cmdStr =cmdStr." ".a:{index}
+
+	let keyword = a:{index}
+	let keyword = s:EscapeForWindowsCMDC(keyword)
+	let cmdStr = cmdStr." ".keyword
 
 	"Save current grepprg and use the default grepprg in CustomGrep
-	let tempPrg=&grepprg
+	let tempPrg = &grepprg
 	exe "set grepprg=".escape(customGrepPrg," ")
 	exe "silent grep! ".cmdStr
 
@@ -322,7 +342,15 @@ function! s:CustomAcg(...)
 
 	let keyword = a:{index}
 	let keyword = s:EscapeForWindowsCMDC(keyword)
+
+	"escape for ag vim plugin
+	let keyword = escape( keyword, '\' )
+
 	let cmdStr =cmdStr." ".keyword
+
+	" echo keyword
+	" let @c = keyword
+	" let @d = keyword
 
 	exe "Ag! ".cmdStr
 endfunction
@@ -363,19 +391,23 @@ function! s:EscapeForSearch()
 		let @/ = s:EscapeForWindowsCMDC( @/ )
 	else
 		if @/ == ""
-			let @/ = "something for nothing!!!"
+			let @/ = "!!!something_for_nothing!!!"
 		endif
 	endif
 endfunction
 function! s:EscapeForSearchVisual()
 	let temp = @s
 	norm! gv"sy
-	let @/ = s:EscapeForWindowsCMDC( @" )
+
+	" let hasSpace = stridx(@", " ")
+	let @/ = '"' . escape(@s, '/\ "%') . '"'
+	let @/ = s:EscapeForWindowsCMDC( @/ )
 	let @/ = substitute( @/, '\n', '\\n', 'g' )
+
 	let @s = temp
 endfunction
-nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! -F <C-R>=@/<CR><CR>
-xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! -F <C-R>=@/<CR><CR>
+nnoremap <F3> :<C-u>call <SID>EscapeForSearch()<CR>:silent grep! <C-R>=@/<CR><CR>
+xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<CR><CR>
 
 " map F2 to search selected in current file
 nnoremap <F2> :vim //j %<CR>
