@@ -123,6 +123,8 @@ set backupdir=$TEMP
 "map , to copy and pase
 nnoremap <silent> , "0
 vnoremap <silent> , "0
+nnoremap <silent> _ ,
+vnoremap <silent> _ ,
 
 "map F10 to open current file's folder
 nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
