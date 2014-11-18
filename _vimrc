@@ -196,6 +196,7 @@ let g:clang_user_options='-stdlib=libc++ -std=c++11 -IIncludePath'
 "[plugin]SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabNoCompleteAfter = ['^', '\s', ',', '=']
 
 "[plugin]Tabular
 " let g:tabular_loaded = 0
