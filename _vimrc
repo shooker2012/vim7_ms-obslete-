@@ -330,6 +330,39 @@ function! s:CustomGrepWithType(...)
 endfunction
 command! -nargs=* GrepT call s:CustomGrepWithType(<f-args>)
 
+function! s:CustomGrepWithDir(...)
+	let cmdStr = ""
+	let index = 1
+	if a:0 < 2
+		return
+	endif
+
+	let customGrepPrg=&grepprg
+	let customGrepPrg=substitute(customGrepPrg, "\\v(\"[^\"]*\"|\\S+)\\s*\$", a:{a:0}, "" )
+
+	while index < a:0 - 1
+		let cmdStr =cmdStr." ".a:{index}
+		let index += 1
+	endwhile
+
+	let keyword = a:{index}
+	let keyword = s:EscapeForWindowsCMDC(keyword)
+	let cmdStr = cmdStr." ".keyword
+
+	"Save current grepprg and use the default grepprg in CustomGrep
+	let tempPrg = &grepprg
+	exe "set grepprg=".escape(customGrepPrg," ")
+	exe "silent grep! ".cmdStr
+
+	"Restore current grepprg
+	exe "set grepprg=".escape(tempPrg," ")
+endfunction
+" cmd: GrepD [grepcmd] [Directory]
+" exe grepcmd in [Directory], no change grepprg
+" [Directory] is a non-space string or a string in quotes
+command! -nargs=* GrepD call s:CustomGrepWithDir(<f-args>)
+
+
 " [plugin]ag
 let g:ag_apply_qmappings=0
 let g:ag_apply_lmappings=0
