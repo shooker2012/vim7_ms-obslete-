@@ -160,8 +160,8 @@ let NERDTreeShowBookmarks=1
 let NERDMenuMode=1
 
 "shortcut
-nnoremap <silent> <unique> <C-l> :<C-u>nohlsearch<CR>:<C-u>MarkClear<CR><C-l>
-nnoremap <silent> <unique> <C-k> :<C-u>Mark<CR>
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:<C-u>MarkClear<CR><C-l>
+nnoremap <silent> <C-k> :<C-u>Mark<CR>
 
 " search and hightlight, but not move the next matching
 nnoremap * *N
@@ -392,9 +392,27 @@ function! s:CustomAcg(...)
 endfunction
 command! -nargs=* Acg call s:CustomAcg(<f-args>)
 
+" map quick fix window.
+function! s:MapQuickFixWindow()
+	botright copen
+	nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
+	nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
+	nnoremap <silent> <buffer> o  <CR>
+	nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
+	nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
+	" nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
+
+	nnoremap <silent> <buffer> e <CR><C-w><C-w>:cclose<CR>'
+	nnoremap <silent> <buffer> go <CR>:copen<CR>
+	nnoremap <silent> <buffer> q  :cclose<CR>
+	nnoremap <silent> <buffer> gv :let b:height=winheight(0)<CR><C-w><CR><C-w>H:copen<CR><C-w>J:exe printf(":normal %d\<lt>c-w>_", b:height)<CR>
+endfunc
+command! Copen call <SID>MapQuickFixWindow()
+
+
 "[function]ChangProjDir: When Open .vimproj file, change current directory
 "and NerdTree to the folder of the file.
-function s:ChangeProjDir( type, isChangeDir )
+function! s:ChangeProjDir( type, isChangeDir )
 	if a:isChangeDir == 1
 		set noautochdir
 		cd %:p:h
@@ -413,6 +431,8 @@ function s:ChangeProjDir( type, isChangeDir )
 
 		nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/n/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
 	endif
+
+	call <SID>MapQuickFixWindow()
 endfunc
 command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>, 0)
 
@@ -451,21 +471,3 @@ xnoremap <F2> :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>N:vim /<C-R>=@/<C
 
 " map ctrl-r + register not auto-indent in insert mode
 inoremap <C-R> <C-R><C-O>
-
-" map quick fix window.
-function! s:MapQuickFixWindow()
-	botright copen
-	nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
-	nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
-	nnoremap <silent> <buffer> o  <CR>
-	nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
-	nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
-	" nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
-
-	nnoremap <silent> <buffer> e <CR><C-w><C-w>:cclose<CR>'
-	nnoremap <silent> <buffer> go <CR>:copen<CR>
-	nnoremap <silent> <buffer> q  :cclose<CR>
-	nnoremap <silent> <buffer> gv :let b:height=winheight(0)<CR><C-w><CR><C-w>H:copen<CR><C-w>J:exe printf(":normal %d\<lt>c-w>_", b:height)<CR>
-endfunc
-call <SID>MapQuickFixWindow()
-
