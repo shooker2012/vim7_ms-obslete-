@@ -300,6 +300,7 @@ function! s:CustomGrep(...)
 	let @" = cmdStr
 	exe "grep! ".cmdStr
 endfunction
+" Grep : escapse some keywords for cmd.exe 
 command! -nargs=* Grep call s:CustomGrep(<f-args>)
 
 function! s:CustomGrepWithType(...)
@@ -328,6 +329,8 @@ function! s:CustomGrepWithType(...)
 	"Restore current grepprg
 	exe "set grepprg=".escape(tempPrg," ")
 endfunction
+" cmd: GrepD [filetype] [grepcmd]
+" exe grepcmd with "--include=[filetype]", no change grepprg
 command! -nargs=* GrepT call s:CustomGrepWithType(<f-args>)
 
 function! s:CustomGrepWithDir(...)
