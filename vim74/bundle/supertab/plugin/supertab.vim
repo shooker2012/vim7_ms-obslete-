@@ -585,6 +585,7 @@ function! s:IsNoCompleteAfterReset() " {{{
   " if the user has g:SuperTabNoCompleteAfter set, then re-map <bs> so that
   " backspacing to a point where one of the g:SuperTabNoCompleteAfter
   " entries matches will cause completion mode to exit.
+  return 0
   let complAfterType = type(b:SuperTabNoCompleteAfter)
   if complAfterType == 2
     return 1
