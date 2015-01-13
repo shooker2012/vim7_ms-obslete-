@@ -94,6 +94,9 @@ set number
 set tabstop=4
 set shiftwidth=4
 
+" except '_' from word
+" set iskeyword=@,48-57,128-167,224-235
+
 "Use system clipboard default
 set clipboard=unnamed
 
