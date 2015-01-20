@@ -226,7 +226,7 @@ map <Leader>gE <Plug>(easymotion-gE)
 
 "[plugin]Auto-paris
 let g:AutoPairsShortcutFastWrap='<M-m>'
-let g:AutoPairsMapSpace=0
+" let g:AutoPairsMapSpace=0
 
 "[plugin]ag
 let g:aghighlight=1
