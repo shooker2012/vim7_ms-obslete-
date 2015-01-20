@@ -8,15 +8,12 @@ set cpo&vim
 AddTabularPattern!  assignment      /[|&+*/%<>=!~-]\@<!\([<>!=]=\|=\~\)\@![|&+*/%<>=!~-]*=/l1r1
 AddTabularPattern!  two_spaces      /  /l0
 
-AddTabularPipeline! multiple_spaces /  / map(a:lines, "substitute(v:val, '   *', '  ', 'g')") | tabular#TabularizeStrings(a:lines, '  ', 'l0')
+AddTabularPipeline! multiple_spaces /  / map(a:lines, "substitute(v:val, '   *', ' ', 'g')") | tabular#TabularizeStrings(a:lines, ' ', 'l0')
 
 AddTabularPipeline! argument_list   /(.*)/ map(a:lines, 'substitute(v:val, ''\s*\([(,)]\)\s*'', ''\1'', ''g'')')
                                        \ | tabular#TabularizeStrings(a:lines, '[(,)]', 'l0')
                                        \ | map(a:lines, 'substitute(v:val, ''\(\s*\),'', '',\1 '', "g")')
                                        \ | map(a:lines, 'substitute(v:val, ''\s*)'', ")", "g")')
-
-"My scripts
-AddTabularPipeline! ts /[ \t]\+/ map(a:lines, "substitute(v:val, '[ \\t]\\+', '\t', 'g')") | tabular#TabularizeStrings(a:lines, '\t', 'l0')
 
 function! SplitCDeclarations(lines)
   let rv = []
