@@ -184,6 +184,12 @@ endfunction
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
+"map g[ or g] to like [{ and ]}
+nnoremap g[ :<C-u>call searchpair('\[', '', '\]', 'bW' )<CR>
+xnoremap g[ :<C-u>call searchpair('\[', '', '\]', 'bW' )<CR>
+nnoremap g] :<C-u>call searchpair('\[', '', '\]', 'W' )<CR>
+xnoremap g] :<C-u>call searchpair('\[', '', '\]', 'W' )<CR>
+
 "[plugin]neocomplcache installation
 let g:neocomplcache_enable_at_startup = 1
 
