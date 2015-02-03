@@ -423,6 +423,8 @@ function! s:ChangeProjDir( type, isChangeDir )
 		set noautochdir
 		cd %:p:h
 		NERDTree %:p:h
+
+		let g:ctrlp_working_path_mode = 'a'
 	endif
 
 	" Project custom config
