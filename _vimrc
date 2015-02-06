@@ -153,7 +153,7 @@ colorscheme solarized
 autocmd FileType lua set commentstring=--\ %s
 
 "[plugin]tagbar config
-nnoremap <silent> <F4> :TagbarToggle<CR>
+nnoremap <silent> <F4> :TagbarOpen fj<CR>
 
 "[plugin]ctags config
 set autochdir
