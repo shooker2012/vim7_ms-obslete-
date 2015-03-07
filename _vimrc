@@ -262,6 +262,7 @@ function! s:EscapeForCMDC( word )
 	let word = substitute( word, "'", "^'", "g" )
 	let word = substitute( word, '(', '^(', "g" )
 	let word = substitute( word, ')', '^)', "g" )
+	let word = substitute( word, '<', '^<', "g" )
 
 	return word
 endfunction
@@ -485,3 +486,17 @@ xnoremap <F2> :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>N:vim /<C-R>=@/<C
 
 " map ctrl-r + register not auto-indent in insert mode
 inoremap <C-R> <C-R><C-O>
+
+
+
+
+" ***REGEX***
+" 1. Zero width assertions
+                           " Request   |       '/'command      |         "grep" command         |       "Grep" command
+" --------------------------------------------------------------------------------------------------------------------------
+    " match "Windows" in "WindowsXP"   |    /\vWindows(XP)@=   |    grep! -P Windows^(?=XP^)    |    Grep -P Windows(?=XP)
+         " match "XP" in "WindowsXP"   |   /\v(Windows)@<=XP   |   grep! -P ^(?^<=Windows^)XP   |   Grep -P (?<=Windows)XP
+" match "Windows" except "WindowsXP"   |    /\vWindows(XP)@!   |    grep! -P Windows^(?!XP^)    |    Grep -P Windows(?!XP)
+         " match "XP" in "WindowsXP"   |   /\v(Windows)@<!XP   |   grep! -P ^(?^<!Windows^)XP   |   Grep -P (?<!Windows)XP
+"
+" 2. Custom command "Grep" is escape some character for windows cmdc.exe. If command "grep" not work, try it.
