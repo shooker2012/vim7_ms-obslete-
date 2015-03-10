@@ -275,7 +275,7 @@ function! s:EscapeForWindowsCMDC( str )
 		let hasQuotes = 1
 	else
 		let keyword = a:str
-		let keyword = escape( keyword, '/\ "%' )
+		let keyword = escape( keyword, '%' )
 		let @" = keyword
 		" let keyword = fnameescape( keyword )
 	endif
