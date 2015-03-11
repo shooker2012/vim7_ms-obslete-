@@ -317,13 +317,13 @@ function! s:CustomGrepWithType(...)
 	let cmdStr = ""
 	let index = 1
 	let customGrepPrg="grep -H -n -r $* *"
-	while index < a:0
-		if a:1 == "%"
-			let customGrepPrg="grep -H -n -r $* \\\"".expand("%:.")."\\\""
-		else
-			let cmdStr =cmdStr." --include=".a:{index}
-		endif
 
+	" Clear old type info
+	let customGrepPrg=&grepprg
+	let customGrepPrg=substitute(customGrepPrg, "\\v--include=\\S+\\s?", "", "" )
+
+	while index < a:0
+		let cmdStr =cmdStr." ".a:{index}
 		let index += 1
 	endwhile
 
@@ -334,13 +334,14 @@ function! s:CustomGrepWithType(...)
 	"Save current grepprg and use the default grepprg in CustomGrep
 	let tempPrg = &grepprg
 	exe "set grepprg=".escape(customGrepPrg," ")
-	exe "silent grep! ".cmdStr
+	exe "grep! ".cmdStr
 
 	"Restore current grepprg
 	exe "set grepprg=".escape(tempPrg," ")
 endfunction
-" cmd: GrepD [filetype] [grepcmd]
-" exe grepcmd with "--include=[filetype]", no change grepprg
+" cmd: GrepT [grepcmd]
+" exe grepcmd without "--include=[filetype]" in grepprg, no change grepprg
+" you can use "GrepT --include=*.aaa --include=*.bbb [othercmd]"
 command! -nargs=* GrepT call s:CustomGrepWithType(<f-args>)
 
 function! s:CustomGrepWithDir(...)
@@ -365,7 +366,7 @@ function! s:CustomGrepWithDir(...)
 	"Save current grepprg and use the default grepprg in CustomGrep
 	let tempPrg = &grepprg
 	exe "set grepprg=".escape(customGrepPrg," ")
-	exe "silent grep! ".cmdStr
+	exe "grep! ".cmdStr
 
 	"Restore current grepprg
 	exe "set grepprg=".escape(tempPrg," ")
