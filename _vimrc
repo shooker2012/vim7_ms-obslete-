@@ -450,7 +450,8 @@ function! s:ChangeProjDir( type, isChangeDir )
 
 	call <SID>MapQuickFixWindow()
 endfunc
-command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>, 0)
+command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>, 1)
+command! -nargs=2 SetProjTypeFull call s:ChangeProjDir(<f-args>)
 
 autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua", 1)
 autocmd BufReadPost *.vimproj call s:ChangeProjDir("", 1)
