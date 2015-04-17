@@ -97,9 +97,6 @@ set shiftwidth=4
 " except '_' from word
 " set iskeyword=@,48-57,128-167,224-235
 
-"Use system clipboard default
-set clipboard=unnamed
-
 "set encoding
 set fileencoding=utf-8
 set encoding=utf-8
@@ -128,6 +125,18 @@ nnoremap <silent> , "0
 vnoremap <silent> , "0
 nnoremap <silent> _ ,
 vnoremap <silent> _ ,
+nnoremap <silent> <Leader>p "*p
+vnoremap <silent> <Leader>p "*p
+nnoremap <silent> <Leader>y "*y
+vnoremap <silent> <Leader>y "*y
+nnoremap <silent> <Leader>P "*P
+vnoremap <silent> <Leader>P "*P
+nnoremap <silent> <Leader>Y "*Y
+vnoremap <silent> <Leader>Y "*Y
+
+" "Use system clipboard default
+" set clipboard=unnamed
+
 
 "map F5 to create a new tab and open currentfile and mirror NERDTREE
 nnoremap <silent> <F5> :silent !ctags -R .<CR>
