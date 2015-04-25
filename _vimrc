@@ -114,6 +114,9 @@ set completeopt-=preview
 "set list char
 set listchars=tab:→→,trail:□
 
+"set large file size
+let g:LargeFile=10
+
 "set swap files directory
 set directory=$TEMP
 
