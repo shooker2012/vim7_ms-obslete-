@@ -151,6 +151,9 @@ nnoremap <silent> <F9> :tabe %<CR>:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
 nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 vnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 
+"map vP to select changed area.
+nnoremap <silent> vP `[v`]
+
 "set syntax rules for glsl and hlsl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl,*.fsh,*.vsh setf glsl
 au BufNewFile,BufRead *.hlsl,*.fx,*.fxh,*.vsh,*.psh setf fx
