@@ -172,6 +172,7 @@ autocmd FileType lua set commentstring=--\ %s
 
 "[plugin]tagbar config
 nnoremap <silent> <F4> :TagbarOpen fj<CR>
+nnoremap <silent> <S-F4> :TagbarClose<CR>
 
 "[plugin]ctags config
 set autochdir
