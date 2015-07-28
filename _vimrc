@@ -431,8 +431,10 @@ function! s:MapQuickFixWindow()
 	nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
 	nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
 	nnoremap <silent> <buffer> o  <CR>
-	nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
-	nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
+	" nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
+	nnoremap <silent> <buffer> t  ^<C-w>gF:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
+	" nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
+	nnoremap <silent> <buffer> T  ^<C-w>gF:NERDTreeFind<CR><C-W>l:copen<CR><C-W>kgT
 	" nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
 
 	nnoremap <silent> <buffer> e <CR><C-w><C-w>:cclose<CR>'
