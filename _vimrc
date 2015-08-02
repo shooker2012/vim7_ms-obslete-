@@ -447,7 +447,7 @@ command! Copen call <SID>MapQuickFixWindow()
 
 "[function]ChangProjDir: When Open .vimproj file, change current directory
 "and NerdTree to the folder of the file.
-" function! s:ChangeProjDir( type, dir, isChangeDir )
+" function! s:ChangeProjDir( type, dir )
 function! s:ChangeProjDir(...)
 	if a:0 == 1
 		let type = a:{1}
@@ -493,9 +493,9 @@ endfunc
 command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>)
 command! -nargs=* OpenProj call s:ChangeProjDir(<f-args>)
 
-autocmd BufReadPost lua.vimproj call s:ChangeProjDir("lua", "")
+autocmd BufReadPost lua.vimproj source %:p | call s:ChangeProjDir("lua", "") 
 autocmd BufReadPost *.vimproj call s:ChangeProjDir("", "")
-autocmd BufReadPost _vimproj call s:ChangeProjDir("", "")
+autocmd BufReadPost _vimproj source %:p | call s:ChangeProjDir("", "")
 
 " map F3 to search selected
 function! s:EscapeForSearch()
