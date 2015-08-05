@@ -445,57 +445,17 @@ endfunc
 command! Copen call <SID>MapQuickFixWindow()
 
 
-"[function]ChangProjDir: When Open .vimproj file, change current directory
-"and NerdTree to the folder of the file.
-" function! s:ChangeProjDir( type, dir )
-function! s:ChangeProjDir(...)
-	if a:0 == 1
-		let type = a:{1}
-		let isChangeDir = 0
-		let dirStr = ""
-	elseif a:0 >= 2
-		let type = a:{1}
-		let isChangeDir = 1
-		let dirStr = a:{2}
-	endif
+" [plugin] SalProj
+command! -nargs=1 SetProjType call SalChangeProjDir(<f-args>)
+command! -nargs=* OpenProj call SalChangeProjDir(<f-args>)
 
-	if isChangeDir == 1
-		if dirStr == ""
-			set noautochdir
-			cd %:p:h
-			NERDTree %:p:h
-		else
-			set noautochdir
+" [TypeAutocmd] set BufReadPost
+autocmd BufReadPost lua.vimproj source %:p | call SalChangeProjDir("lua", "") 
+autocmd BufReadPost py.vimproj source %:p | call SalChangeProjDir("python", "") 
+autocmd BufReadPost python.vimproj source %:p | call SalChangeProjDir("python", "") 
 
-			echo dirStr
-			exe "cd ".dirStr
-			exe "NERDTree ".dirStr
-		endif
-
-		let g:ctrlp_working_path_mode = 'a'
-	endif
-
-	" Project custom config
-	if type == "lua"
-		set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
-		" set grepprg=ag\ --column
-
-		let g:agprg="ag --column -G .*\\.lua"
-
-		copen
-		autocmd BufRead *.lua UpdateTypesFileOnly
-
-		nnoremap <silent> <F5> :silent !ctags --langdef=MYLUA --langmap=MYLUA:.lua --regex-MYLUA="/^.*\s*function\s*(\w+):(\w+).*$/\2/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*[0-9]+.*$/\1/e/" --regex-MYLUA="/^.*\s*function\s*(\w+)\.(\w+).*$/\2/f/" --regex-MYLUA="/^.*\s*function\s*(\w+)\s*\(.*$/\1/f/" --regex-MYLUA="/^\s*(\w+)\s*=\s*\{.*$/\1/n/" --regex-MYLUA="/^\s*module\s+\""(\w+)\"".*$/\1/m,module/" --regex-MYLUA="/^\s*module\s+\""[a-zA-Z0-9._]+\.(\w+)\"".*$/\1/m,module/" --languages=MYLUA --excmd=number -R .<CR>
-	endif
-
-	call <SID>MapQuickFixWindow()
-endfunc
-command! -nargs=1 SetProjType call s:ChangeProjDir(<f-args>)
-command! -nargs=* OpenProj call s:ChangeProjDir(<f-args>)
-
-autocmd BufReadPost lua.vimproj source %:p | call s:ChangeProjDir("lua", "") 
-autocmd BufReadPost *.vimproj call s:ChangeProjDir("", "")
-autocmd BufReadPost _vimproj source %:p | call s:ChangeProjDir("", "")
+autocmd BufReadPost *.vimproj call SalChangeProjDir("", "")
+autocmd BufReadPost _vimproj call SalChangeProjDir("", "")
 
 " map F3 to search selected
 function! s:EscapeForSearch()
