@@ -17,6 +17,45 @@ if (v:progname == "ex")
 endif
 let loaded_shookerVimProj = 1
 
+let s:dictionary_postfix = { }
+let s:dictionary_postfix[ "vimproj" ] = 1
+let s:dictionary_postfix[ "_vimproj" ] = 1
+
+" [Interface] let salproj work!
+function! SalProjAwark( )
+	" [plugin] SalProj
+	command! -nargs=1 SetProjType call SalProjSetType(<f-args>)
+	" command! -nargs=* OpenProj call SalChangeProjDir(<f-args>)
+
+	" [TypeAutocmd] set BufReadPost
+	for postfixStr in keys( s:dictionary_postfix )
+		exe 'autocmd BufReadPost *.'.postfixStr.' call <SID>SalProjHit( )'
+	endfor
+
+	autocmd BufReadPost _vimproj call <SID>SalProjHit( )
+endfunction
+
+" [Interface] add new postfix to vimproj file type.
+function! SalProjAddProjFile( postfixStr )
+	let s:dictionary_postfix[postfixStr] = 1
+endfunction
+
+" [Interface] use proj's configs by type
+function! SalProjSetType( type )
+	" set path config
+	set noautochdir
+
+	" [plugin]ctrlp
+	let g:ctrlp_working_path_mode = 'a'
+	
+	" Project custom config
+	if has_key( g:dictionary_type_2_func, a:type ) == 1
+		call g:dictionary_type_2_func[a:type]( )
+	end
+
+	call <SID>MapQuickFixWindow()
+endfunction
+
 " [TypeCustom]lua
 function! <SID>LuaTypeCustom( )
 	set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
@@ -46,7 +85,7 @@ let dictionary_type_2_func[ "lua" ] = function( "<SID>LuaTypeCustom" )
 let dictionary_type_2_func[ "python" ] = function( "<SID>PythonTypeCustom" )
 
 " map quick fix window.
-function! s:MapQuickFixWindow()
+function! <SID>MapQuickFixWindow()
 	botright copen
 	nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
 	nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
@@ -61,43 +100,45 @@ function! s:MapQuickFixWindow()
 	nnoremap <silent> <buffer> go <CR>:copen<CR>
 	nnoremap <silent> <buffer> q  :cclose<CR>
 	nnoremap <silent> <buffer> gv :let b:height=winheight(0)<CR><C-w><CR><C-w>H:copen<CR><C-w>J:exe printf(":normal %d\<lt>c-w>_", b:height)<CR>
-endfunc
-command! Copen call <SID>MapQuickFixWindow()
+endfunction
 
-"[function]ChangProjDir: When Open .vimproj file, change current directory
-"and NerdTree to the folder of the file.
-" function! SalChangeProjDir( type, dir )
-function! SalChangeProjDir(...)
-	if a:0 == 1
-		let type = a:{1}
-		let isChangeDir = 0
-		let dirStr = ""
-	elseif a:0 >= 2
-		let type = a:{1}
-		let isChangeDir = 1
-		let dirStr = a:{2}
+function! <SID>SalProjHit( )
+	let filename = expand("%:p")
+	let filepath = expand("%:p:h")
+
+	let filelist = matchlist( filename, '\v%(^.*[\/]%([^\/]+)@=)?%(%(.+)\.%(.*\.)@=)?%(([^\/.]+)?\.)?\.?([^\/.]+)$' )
+	let typeStr = filelist[1]
+	let postfixStr = filelist[2]
+
+	"check if file is vimproj file.
+	if has_key( s:dictionary_postfix, postfixStr ) == 0
+		return
 	endif
 
-	if isChangeDir == 1
-		if dirStr == ""
-			set noautochdir
-			cd %:p:h
-			NERDTree %:p:h
-		else
-			set noautochdir
-
-			echo dirStr
-			exe "cd ".dirStr
-			exe "NERDTree ".dirStr
+	" [plugin]NERDTree
+	let useNERDTreeInFile = 0
+	let filecontent = readfile( filename )
+	for line in filecontent
+		if match( line, "NERDTree" )
+			let useNERDTreeInFile = 1
+			break
 		endif
+	endfor
 
-		let g:ctrlp_working_path_mode = 'a'
+	" custom config in vimproj file
+	exe "so ".filename
+
+	exe "cd ".filepath
+	if useNERDTreeInFile == 0
+		exe "NERDTree ".filepath
 	endif
 
-	" Project custom config
-	if has_key( g:dictionary_type_2_func, type ) == 1
-		call g:dictionary_type_2_func[type]( )
-	end
+	command! Copen call <SID>MapQuickFixWindow()
 
-	call <SID>MapQuickFixWindow()
-endfunc
+	" set proj type
+	call SalProjSetType( typeStr )
+endfunction
+
+if  exists("salproj_awake") && g:salproj_awake == 1
+	call SalProjAwark( )
+endif
