@@ -445,17 +445,9 @@ endfunc
 command! Copen call <SID>MapQuickFixWindow()
 
 
-" [plugin] SalProj
-command! -nargs=1 SetProjType call SalChangeProjDir(<f-args>)
-command! -nargs=* OpenProj call SalChangeProjDir(<f-args>)
+" [plugin]SalProj
+let g:salproj_awark = 1
 
-" [TypeAutocmd] set BufReadPost
-autocmd BufReadPost lua.vimproj source %:p | call SalChangeProjDir("lua", "") 
-autocmd BufReadPost py.vimproj source %:p | call SalChangeProjDir("python", "") 
-autocmd BufReadPost python.vimproj source %:p | call SalChangeProjDir("python", "") 
-
-autocmd BufReadPost *.vimproj call SalChangeProjDir("", "")
-autocmd BufReadPost _vimproj call SalChangeProjDir("", "")
 
 " map F3 to search selected
 function! s:EscapeForSearch()
