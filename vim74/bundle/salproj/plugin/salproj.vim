@@ -75,6 +75,11 @@ function! <SID>PythonTypeCustom( )
 
 	" let g:agprg="ag --column -G .*\\.lua"
 
+	" set tab config
+	set softtabstop=4
+	set shiftwidth=4
+	set expandtab
+
 	copen
 	autocmd BufRead *.py UpdateTypesFileOnly
 endfunction
@@ -83,6 +88,7 @@ endfunction
 let dictionary_type_2_func = { }
 let dictionary_type_2_func[ "lua" ] = function( "<SID>LuaTypeCustom" )
 let dictionary_type_2_func[ "python" ] = function( "<SID>PythonTypeCustom" )
+let dictionary_type_2_func[ "py" ] = function( "<SID>PythonTypeCustom" )
 
 " map quick fix window.
 function! <SID>MapQuickFixWindow()
@@ -119,7 +125,7 @@ function! <SID>SalProjHit( )
 	let useNERDTreeInFile = 0
 	let filecontent = readfile( filename )
 	for line in filecontent
-		if match( line, "NERDTree" )
+		if match( line, "NERDTree" ) != -1
 			let useNERDTreeInFile = 1
 			break
 		endif

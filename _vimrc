@@ -543,3 +543,23 @@ nnoremap <C-H> :Hexmode<CR>
 inoremap <C-H> <Esc>:Hexmode<CR>
 vnoremap <C-H> :<C-U>Hexmode<CR>
 " Hex mode end.==========
+
+" Copy matches to register.
+" Search for a pattern, then enter :CopyMatches to copy all matches to the clipboard, or :CopyMatches x where x is any register to hold the result.
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
+
+  let reg = empty(a:reg) ? '+' : a:reg
+  " clear register
+  execute 'let @'.tolower(reg).' = ""'
+  " copy matches to reigster
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+  
+  " cancle the %s changes.
+  normal u
+  " Back to the position before
+  exec "normal 2\<C-O>"
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
+command! -register CM call CopyMatches(<q-reg>)
