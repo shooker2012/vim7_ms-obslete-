@@ -135,6 +135,11 @@ set cpo&vim
     let g:SuperTabUndoBreak = 0
   endif
 
+  " [shooker2012] add global value for disable supertab
+  if !exists("g:SuperTabDisabled")
+	let g:SuperTabDisabled = 0
+  endif
+
 " }}}
 
 " Script Variables {{{
@@ -168,6 +173,17 @@ set cpo&vim
   let s:modes = s:modes . '/n/p'
 
 " }}}
+
+" [shooker2012] toogle SupterTab
+function! s:SuperTabToogle()
+	if g:SuperTabDisabled == 0
+		let g:SuperTabDisabled = 1
+		echo "SuperTab Disabled."
+	else
+		let g:SuperTabDisabled = 0
+		echo "SuperTab Enabled."
+	endif
+endfunction
 
 function! SuperTabSetDefaultCompletionType(type) " {{{
   " Globally available function that users can use to set the default
@@ -533,6 +549,11 @@ function! s:WillComplete(...) " {{{
   " completion mode.
   if pumvisible() && !a:0
     return 1
+  endif
+
+  " [shooker2012] disable the supertab
+  if g:SuperTabDisabled == 1
+    return 0
   endif
 
   let line = getline('.')
@@ -1014,6 +1035,10 @@ endfunction " }}}
 " Command Mappings {{{
   if !exists(":SuperTabHelp")
     command SuperTabHelp :call <SID>SuperTabHelp()
+  endif
+
+  if !exists(":SuperTabToogle")
+	  command SuperTabToogle :call <SID>SuperTabToogle()
   endif
 " }}}
 
