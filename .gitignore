@@ -2,7 +2,6 @@
 #ingonre these files
 vim74/*.*
 vim74/autoload/*
-vim74/colors/*
 vim74/compiler/*
 vim74/doc/*
 vim74/ftplugin/*

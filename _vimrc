@@ -170,6 +170,7 @@ execute pathogen#infect()
 syntax enable
 set background=dark
 colorscheme solarized
+" other colorscheme: sonofobsidian/dracula/Tomorrow
 
 " [plugin]commentary config
 autocmd FileType lua set commentstring=--\ %s
