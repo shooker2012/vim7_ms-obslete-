@@ -273,7 +273,7 @@ set grepprg=grep\ -n\ -r\ $*\ *
 
 function! s:EscapeForGrepAndAg( word )
 	" escape for grep and ag
-	let word = escape( a:word, '-' )
+	let word = escape( a:word, '-#' )
 
 	return word
 endfunction
