@@ -169,8 +169,8 @@ execute pathogen#infect()
 " [plugin]solarized config
 syntax enable
 set background=dark
-colorscheme solarized
-" other colorscheme: sonofobsidian/dracula/Tomorrow
+colorscheme eva
+" other colorscheme: sonofobsidian/dracula/Tomorrow/vividchalk
 
 " [plugin]commentary config
 autocmd FileType lua set commentstring=--\ %s
