@@ -14,7 +14,7 @@ if exists("syntax_on")
    syntax reset
 endif
 
-let colors_name = "vividchalk"
+let colors_name = "eva"
 
 " First two functions adapted from inkpot.vim
 
@@ -151,7 +151,7 @@ highlight DiffText      cterm=bold ctermbg=9 gui=bold guibg=Red
 
 highlight Pmenu         guifg=White ctermfg=White gui=bold cterm=bold
 highlight PmenuSel      guifg=White ctermfg=White gui=bold cterm=bold
-call s:hibg("Pmenu"     ,"#000099","Blue",18)
+call s:hibg("Pmenu"     ,"#3E89CA","Blue",18)
 call s:hibg("PmenuSel"  ,"#5555ff","DarkCyan",39)
 highlight PmenuSbar     guibg=Grey ctermbg=Grey
 highlight PmenuThumb    guibg=White ctermbg=White
