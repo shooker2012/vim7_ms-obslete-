@@ -14,7 +14,7 @@ if exists("syntax_on")
    syntax reset
 endif
 
-let colors_name = "eva"
+let colors_name = "eva-unit-02"
 
 " First two functions adapted from inkpot.vim
 
@@ -174,16 +174,16 @@ endif
 hi Identifier cterm=none
 " Commented numbers at the end are *old* 256 color values
 "highlight PreProc       guifg=#EDF8F9
-call s:hifg("Comment"        ,"#9933CC","DarkMagenta",34) " 92
+call s:hifg("Comment"        ,"#909090","DarkMagenta",34) " 92
 " 26 instead?
 call s:hifg("Constant"       ,"#A6D6FC","DarkCyan",21) " 30
 call s:hifg("rubyNumber"     ,"#CCFF33","Yellow",60) " 190
-call s:hifg("String"         ,"#66FF00","LightGreen",44,82) " 82
+call s:hifg("String"         ,"#00AA00","LightGreen",44,82) " 82
 call s:hifg("Identifier"     ,"#FFCC00","Yellow",72) " 220
 call s:hifg("Statement"      ,"#FF6600","Brown",68) " 202
-call s:hifg("PreProc"        ,"#AAFFFF","LightCyan",47) " 213
+call s:hifg("PreProc"        ,"#909090","LightCyan",47) " 213
 call s:hifg("railsUserMethod","#AACCFF","LightCyan",27)
-call s:hifg("Type"           ,"#AAFFFF","Grey",57) " 101
+call s:hifg("Type"           ,"#FFCC00","Grey",57) " 101
 call s:hifg("railsUserClass" ,"#AAAAAA","Grey",7) " 101
 call s:hifg("Special"        ,"#AACCFF","DarkGreen",24) " 7
 call s:hifg("Regexp"         ,"#44B4CC","DarkCyan",21) " 74

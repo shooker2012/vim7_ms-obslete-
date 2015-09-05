@@ -142,7 +142,7 @@ vnoremap <silent> <Leader>Y "*Y
 
 
 "map F5 to create a new tab and open currentfile and mirror NERDTREE
-nnoremap <silent> <F5> :silent !ctags -R .<CR>
+nnoremap <silent> <F5> :silent !ctags -R .<CR>:UpdateTypesFile<CR>
 
 "map F9 to create a new tab and open currentfile and mirror NERDTREE
 nnoremap <silent> <F9> :tabe %<CR>:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
