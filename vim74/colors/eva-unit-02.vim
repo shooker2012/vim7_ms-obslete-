@@ -182,7 +182,8 @@ call s:hifg("rubyNumber"     ,"#CCFF33","Yellow",60) " 190
 call s:hifg("String"         ,"#00AA00","LightGreen",44,82) " 82
 call s:hifg("Identifier"     ,"#FFCC00","Yellow",72) " 220
 call s:hifg("Statement"      ,"#FF6600","Brown",68) " 202
-call s:hifg("PreProc"        ,"#909090","LightCyan",47) " 213
+call s:hifg("PreProc"        ,"#AAFFFF","LightCyan",47) " 213
+
 call s:hifg("railsUserMethod","#AACCFF","LightCyan",27)
 call s:hifg("Type"           ,"#FFCC00","Grey",57) " 101
 call s:hifg("railsUserClass" ,"#AAAAAA","Grey",7) " 101
