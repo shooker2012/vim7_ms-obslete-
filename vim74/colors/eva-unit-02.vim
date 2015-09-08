@@ -120,7 +120,7 @@ high link Directory     Identifier
 highlight ErrorMsg      guibg=Red ctermbg=DarkRed guifg=NONE ctermfg=NONE
 highlight Search        guifg=NONE ctermfg=NONE gui=none cterm=none
 call s:hibg("Search"    ,"#66FF00","DarkBlue",81)
-call s:hifg("Search"    ,"#000000","DarkBlue",81)
+call s:hifg("Search"    ,"#000000","Black",81)
 highlight IncSearch     guifg=White guibg=Black ctermfg=White ctermbg=Black
 highlight MoreMsg       guifg=#00AA00 ctermfg=Green
 highlight LineNr        guifg=#DDEEFF ctermfg=White
