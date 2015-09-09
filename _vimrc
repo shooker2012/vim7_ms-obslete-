@@ -551,9 +551,9 @@ vnoremap <C-H> :<C-U>Hexmode<CR>
 
 " Copy matches to register.
 " Search for a pattern, then enter :CopyMatches to copy all matches to the clipboard, or :CopyMatches x where x is any register to hold the result.
-function! CopyMatches(reg)
+function! CopyMatches(reg) range
   let hits = []
-  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
+  execute a:firstline.",".a:lastline.'s//\=len(add(hits, submatch(0))) ? submatch(0) : ""/ge'
 
   let reg = empty(a:reg) ? '+' : a:reg
   " clear register
@@ -566,5 +566,5 @@ function! CopyMatches(reg)
   " Back to the position before
   exec "normal 2\<C-O>"
 endfunction
-command! -register CopyMatches call CopyMatches(<q-reg>)
-command! -register CM call CopyMatches(<q-reg>)
+command! -range=% -register CopyMatches call CopyMatches(<q-reg>)
+command! -range=% -register CM <line1>,<line2> call CopyMatches(<q-reg>)
