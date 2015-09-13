@@ -71,7 +71,7 @@ endfunction
 
 " [TypeCustom]py
 function! <SID>PythonTypeCustom( )
-	" set grepprg=grep\ -n\ -r\ --include=*.lua\ $*\ *
+	set grepprg=grep\ -n\ -r\ --include=*.py\ $*\ *
 
 	" let g:agprg="ag --column -G .*\\.lua"
 
@@ -82,6 +82,9 @@ function! <SID>PythonTypeCustom( )
 
 	copen
 	autocmd BufRead *.py UpdateTypesFileOnly
+
+    let g:NERDTreeIgnore+=[ '\.pyc', '\.taghl', '__pycache__', '^tags$' ]
+
 endfunction
 
 " [TypeMap]

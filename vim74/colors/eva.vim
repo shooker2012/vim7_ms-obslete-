@@ -107,11 +107,12 @@ highlight StatusLineNC  guifg=#444444 guibg=#aaaaaa gui=none ctermfg=Black cterm
     "highlight StatusLine ctermbg=43
 "endif
 
-highlight Ignore        ctermfg=Black
+highlight Ignore        guifg=Grey	ctermfg=Black
 highlight WildMenu      guifg=Black   guibg=#ffff00 gui=bold ctermfg=Black ctermbg=Yellow cterm=bold
 highlight Cursor        guifg=Black guibg=White ctermfg=Black ctermbg=White
 call s:hibg("ColorColumn","#333333","DarkGrey",81)
-call s:hibg("CursorLine","#333333","DarkGrey",81)
+call s:hibg("CursorLine", "#333333","DarkGrey",81)
+call s:hifg("CursorLine", "#bbbbbb","LightGrey",85)
 call s:hibg("CursorColumn","#333333","DarkGrey",81)
 highlight NonText       guifg=#404040 ctermfg=8
 highlight SpecialKey    guifg=#404040 ctermfg=8
@@ -119,9 +120,9 @@ highlight Directory     none
 high link Directory     Identifier
 highlight ErrorMsg      guibg=Red ctermbg=DarkRed guifg=NONE ctermfg=NONE
 highlight Search        guifg=NONE ctermfg=NONE gui=none cterm=none
-call s:hibg("Search"    ,"#33AA00","DarkBlue",81)
+call s:hibg("Search"    ,"#3871DE","DarkBlue",81)
 call s:hifg("Search"    ,"#000000","Black",81)
-highlight IncSearch     guifg=#70F0F0 guibg=Black ctermfg=White ctermbg=Black
+highlight IncSearch     guifg=Black guibg=#FFE792 ctermfg=White ctermbg=Black
 highlight MoreMsg       guifg=#00AA00 ctermfg=Green
 highlight LineNr        guifg=#DDEEFF ctermfg=White
 call s:hibg("LineNr"    ,"#222222","DarkBlue",80)
@@ -132,7 +133,7 @@ highlight VisualNOS     gui=none cterm=none
 call s:hibg("Visual"    ,"#555577","LightBlue",83)
 call s:hibg("VisualNOS" ,"#444444","DarkBlue",81)
 call s:hibg("MatchParen","#1100AA","DarkBlue",18)
-highlight WarningMsg    guifg=Red ctermfg=Red
+highlight WarningMsg    guifg=Black guibg=#FFE792 ctermfg=Red 
 highlight Error         ctermbg=DarkRed
 highlight SpellBad      ctermbg=DarkRed
 " FIXME: Comments
@@ -190,3 +191,14 @@ call s:hifg("Special"        ,"#AACCFF","DarkGreen",24) " 7
 call s:hifg("Regexp"         ,"#44B4CC","DarkCyan",21) " 74
 call s:hifg("rubyMethod"     ,"#DDE93D","Yellow",77) " 191
 "highlight railsMethod   guifg=#EE1122 ctermfg=1
+
+
+highlight Constant        gui=bold
+highlight ErrorMsg        gui=bold
+highlight MatchParen      gui=bold
+" highlight Statement       gui=bold
+highlight WarningMsg      gui=bold
+highlight Search	      gui=bold
+highlight IncSearch	      gui=bold
+highlight Identifier      gui=bold
+highlight Type		      gui=bold
