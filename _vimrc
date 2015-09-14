@@ -169,7 +169,7 @@ execute pathogen#infect()
 " [plugin]solarized config
 syntax enable
 set background=dark
-colorscheme eva
+colorscheme eva-unit-02
 " other colorscheme: sonofobsidian/dracula/Tomorrow/vividchalk
 
 " [plugin]commentary config
