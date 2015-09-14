@@ -151,6 +151,10 @@ nnoremap <silent> <F9> :tabe %<CR>:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
 nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 vnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
 
+"map [t and ]t: jump to parent tag
+nnoremap ]t vatatv
+nnoremap [t vatatov
+
 "map vP to select changed area.
 nnoremap <silent> vP `[v`]
 
