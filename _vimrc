@@ -75,6 +75,16 @@ if has("autocmd")
 
   augroup END
 
+
+  " [plugin]commentary config
+  autocmd FileType lua set commentstring=--\ %s
+
+  "[plugin]Fugitive
+  autocmd User fugitive 
+              \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+              \   nnoremap <buffer> .. :edit %:h<CR> |
+              \ endif
+  autocmd BufReadPost fugitive://* set bufhidden=delete
 else
 
   set autoindent		" always set autoindenting on
@@ -176,9 +186,6 @@ set background=dark
 colorscheme eva-unit-02
 " other colorscheme: sonofobsidian/dracula/Tomorrow/vividchalk
 
-" [plugin]commentary config
-autocmd FileType lua set commentstring=--\ %s
-
 "[plugin]tagbar config
 nnoremap <silent> <F4> :TagbarOpen fj<CR>
 nnoremap <silent> <S-F4> :TagbarClose<CR>
@@ -189,6 +196,9 @@ set autochdir
 "[plugin]Nerdtree
 let NERDTreeShowBookmarks=1
 let NERDMenuMode=1
+
+"[plugin]Fugitive
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 "shortcut
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>:<C-u>MarkClear<CR><C-l>
