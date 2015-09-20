@@ -178,6 +178,8 @@ au BufNewFile,BufRead *.hlsl,*.fx,*.fxh,*.vsh,*.psh setf fx
 
 
 " [plugin]pathogen config
+" let g:pathogen_disabled = []
+" call add(g:pathogen_disabled, 'some_thing_name')
 execute pathogen#infect()
 
 " [plugin]solarized config
