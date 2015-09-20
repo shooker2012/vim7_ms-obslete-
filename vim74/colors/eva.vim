@@ -145,11 +145,6 @@ call s:hibg("Folded"    ,"#110077","DarkBlue",17)
 call s:hifg("Folded"    ,"#aaddee","LightCyan",63)
 highlight FoldColumn    none
 high link FoldColumn    Folded
-highlight DiffAdd       ctermbg=4 guibg=DarkBlue
-highlight DiffChange    ctermbg=5 guibg=DarkMagenta
-highlight DiffDelete    ctermfg=12 ctermbg=6 gui=bold guifg=Blue guibg=DarkCyan
-highlight DiffText      ctermbg=DarkRed
-highlight DiffText      cterm=bold ctermbg=9 gui=bold guibg=Red
 
 highlight Pmenu         guifg=White ctermfg=White gui=bold cterm=bold
 highlight PmenuSel      guifg=White ctermfg=White gui=bold cterm=bold
@@ -192,6 +187,10 @@ call s:hifg("Regexp"         ,"#44B4CC","DarkCyan",21) " 74
 call s:hifg("rubyMethod"     ,"#DDE93D","Yellow",77) " 191
 "highlight railsMethod   guifg=#EE1122 ctermfg=1
 
+hi DiffAdd ctermfg=231 ctermbg=64 cterm=bold  guibg=#2c5f24 gui=bold
+hi DiffDelete ctermfg=88 ctermbg=NONE cterm=NONE  guibg=NONE gui=NONE
+hi DiffChange ctermfg=231 ctermbg=23 cterm=NONE  guibg=#243a5f gui=NONE
+hi DiffText ctermfg=231 ctermbg=24 cterm=bold  guibg=#204a87 gui=bold
 
 highlight Constant        gui=bold
 highlight ErrorMsg        gui=bold
