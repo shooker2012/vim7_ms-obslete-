@@ -198,6 +198,7 @@ set autochdir
 "[plugin]Nerdtree
 let NERDTreeShowBookmarks=1
 let NERDMenuMode=1
+let NERDTreeChDirMode=1
 
 "[plugin]Fugitive
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
