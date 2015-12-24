@@ -503,7 +503,8 @@ xnoremap <F2> :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>N:vim /<C-R>=@/<C
 " map ctrl-r + register not auto-indent in insert mode
 inoremap <C-R> <C-R><C-O>
 
-
+nnoremap <silent> <Leader>cp :let @*=expand("%")<CR>
+nnoremap <silent> <Leader>cfp :let @*=expand("%:p")<CR>
 
 
 " ***REGEX***
