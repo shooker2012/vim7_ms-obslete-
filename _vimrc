@@ -122,7 +122,7 @@ set guifontwide=NSimSun:h12
 set completeopt-=preview
 
 "set list char
-set listchars=tab:■■,trail:▓
+set listchars=tab:■■,trail:▓,eol:▼
 
 "set large file size
 let g:LargeFile=10
