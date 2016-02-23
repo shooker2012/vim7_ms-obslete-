@@ -226,10 +226,20 @@ nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
 "map g[ or g] to like [{ and ]}
-nnoremap g[ :<C-u>call searchpair('\[', '', '\]', 'bW' )<CR>
-xnoremap g[ :<C-u>call searchpair('\[', '', '\]', 'bW' )<CR>
-nnoremap g] :<C-u>call searchpair('\[', '', '\]', 'W' )<CR>
-xnoremap g] :<C-u>call searchpair('\[', '', '\]', 'W' )<CR>
+function! s:GoToUnmatchedSquare( flag_string )
+	" if searchpair('\[', '', '\]', a:flag_string ):
+	let result_code = searchpair('\[', '', '\]', a:flag_string )
+	echo result_code
+	if result_code == 0 || result_code == -1
+		call search( '[\[\]]', a:flag_string )
+	endif
+endfunction
+
+nnoremap g[ :<C-u>call <SID>GoToUnmatchedSquare( "bW" )<CR>
+xnoremap g[ :<C-u>call <SID>GoToUnmatchedSquare( "bW" )<CR>
+nnoremap g] :<C-u>call <SID>GoToUnmatchedSquare( "W" )<CR>
+xnoremap g] :<C-u>call <SID>GoToUnmatchedSquare( "W" )<CR>
+
 
 "[plugin]neocomplcache installation
 let g:neocomplcache_enable_at_startup = 1
