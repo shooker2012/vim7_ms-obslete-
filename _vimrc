@@ -500,6 +500,9 @@ xnoremap <F3> :<C-u>call <SID>EscapeForSearchVisual()<CR>:silent grep! <C-R>=@/<
 nnoremap <F2> :vim //j %<CR>
 xnoremap <F2> :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>N:vim /<C-R>=@/<CR>/j %<CR>
 
+" Open the error(local) window and show the newest.
+command! Lopen lopen | silent! lnewer
+
 " map ctrl-r + register not auto-indent in insert mode
 inoremap <C-R> <C-R><C-O>
 
