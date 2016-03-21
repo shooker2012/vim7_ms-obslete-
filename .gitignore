@@ -27,3 +27,4 @@ vim74/tags
 !vim74/syntax/glsl.vim
 !vim74/ftplugin/mkd.vim
 !vim74/syntax/mkd.vim
+!vim74/ftplugin/python.vim
