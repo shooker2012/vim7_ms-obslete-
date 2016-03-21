@@ -4,7 +4,7 @@ vim74/*.*
 vim74/autoload/*
 vim74/compiler/*
 vim74/doc/*
-vim74/ftplugin/*
+vim74/ftplugin/*.*
 vim74/indent/*
 vim74/keymap/*
 vim74/lang/*
@@ -27,3 +27,6 @@ vim74/tags
 !vim74/syntax/glsl.vim
 !vim74/ftplugin/mkd.vim
 !vim74/syntax/mkd.vim
+!vim74/ftplugin/python.vim
+!vim74/ftplugin/python/textobj-python.vim
+
