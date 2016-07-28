@@ -134,12 +134,16 @@ function! <SID>SalProjHit( )
 		endif
 	endfor
 
+	" hide vimproj files and tag files
+    let g:NERDTreeIgnore+=[ '_vimproj', '\.vimproj',  '\.taghl', '^tags$' ]
+
+
 	" custom config in vimproj file
 	exe "so ".filename
 
 	exe "cd ".filepath
 	if useNERDTreeInFile == 0
-		exe "NERDTree ".filepath
+		exe "silent NERDTree ".filepath
 	endif
 
 	command! Copen call <SID>MapQuickFixWindow()
