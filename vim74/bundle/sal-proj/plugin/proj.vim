@@ -152,6 +152,6 @@ function! <SID>SalProjHit( )
 	call SalProjSetType( typeStr )
 endfunction
 
-if  exists("salproj_awake") && g:salproj_awake == 1
+if  exists("sal_proj_awake") && g:sal_proj_awake == 1
 	call SalProjAwark( )
 endif
