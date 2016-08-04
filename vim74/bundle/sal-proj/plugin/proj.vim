@@ -137,10 +137,6 @@ function! <SID>SalProjHit( )
 	" hide vimproj files and tag files
     let g:NERDTreeIgnore+=[ '_vimproj', '\.vimproj',  '\.taghl', '^tags$' ]
 
-
-	" custom config in vimproj file
-	exe "so ".filename
-
 	exe "cd ".filepath
 	if useNERDTreeInFile == 0
 		exe "silent NERDTree ".filepath
@@ -150,6 +146,9 @@ function! <SID>SalProjHit( )
 
 	" set proj type
 	call SalProjSetType( typeStr )
+
+	" custom config in vimproj file
+	exe "so ".filename
 endfunction
 
 if  exists("sal_proj_awake") && g:sal_proj_awake == 1
