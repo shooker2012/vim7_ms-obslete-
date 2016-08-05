@@ -158,8 +158,8 @@ nnoremap <silent> <F5> :silent !ctags -R .<CR>:UpdateTypesFile<CR>
 nnoremap <silent> <F9> :tabe %<CR>:NERDTreeFind<CR><C-W>l:copen<CR><C-W>k
 
 "map F10 to open current file's folder
-nnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
-vnoremap <silent> <F10> :!start explorer.exe /select,%:p<CR><CR>
+nnoremap <silent> <F10> :!start explorer.exe /select,<C-R>=expand("%:p")<CR><CR><CR>
+vnoremap <silent> <F10> :!start explorer.exe /select,<C-R>=expand("%:p")<CR><CR><CR>
 
 "map [t and ]t: jump to parent tag
 nnoremap ]t vatatv
