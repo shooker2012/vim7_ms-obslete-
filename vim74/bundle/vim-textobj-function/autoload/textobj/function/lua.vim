@@ -39,6 +39,8 @@ function! s:select_a()
 		let temp_start = getpos('.')
 		" use matchit plugin to find end that match the begin.
 		norm %
+
+		call search( s:FUNCTION_PATTERNS.end, 'eW' )
 		let temp_end = getpos('.')
 
 		if temp_start == temp_end
@@ -47,7 +49,7 @@ function! s:select_a()
 
 		" if the match end is behind origin_pos, get it!
 		if temp_end[1] > origin_pos[1] || temp_end[1] == origin_pos[1] && temp_end[2] > origin_pos[2]
-			return ['V', temp_start, temp_end]
+			return ['v', temp_start, temp_end]
 		endif
 
 		call setpos('.', temp_start)
@@ -67,34 +69,33 @@ function! s:select_i()
 	" move to the end of begin word
 	call setpos( '.', ba)
 	call search( s:FUNCTION_PATTERNS.begin, 'We' )
-	" let bi = getpos('.')
-	" let line_end = len(getline('.'))
-	" " if is the EOL, move the downward line, else move to right.
-	" if bi[2] == line_end
-	" 	norm! +
-	" else
-	" 	norm! l
-	" endif
-	norm! +
+	let bi = getpos('.')
+	let line_end = len(getline('.'))
+	" if is the EOL, move the downward line, else move to right.
+	if bi[2] == line_end
+		norm! +
+	else
+		norm! l
+	endif
 	let bi = getpos('.')
 
 	" move to the begin of end word
 	call setpos( '.', ea)
-	" let ei = getpos('.')
-	" " if is the EOL, move the upward line, else move to left.
-	" if ei[2] == 1
-	" 	norm! -
-	" else
-	" 	norm! h
-	" endif
-	norm! -
+	call search( s:FUNCTION_PATTERNS.end, 'bW' )
+	let ei = getpos('.')
+	" if is the EOL, move the upward line, else move to left.
+	if ei[2] == 1
+		norm! -
+	else
+		norm! h
+	endif
 	let ei = getpos('.')
 
 	if bi[1] > ei[1]
-		return ['V', ba, ea]
+		return ['v', ba, ea]
 	endif
 
-	return ['V', bi, ei]
+	return ['v', bi, ei]
 endfunction
 
 " __END__  "{{{1
