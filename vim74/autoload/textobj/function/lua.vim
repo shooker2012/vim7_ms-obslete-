@@ -37,8 +37,21 @@ function! s:select_a()
 	while search( s:FUNCTION_PATTERNS.begin, 'bW' ) != 0
 		" find the begin of function.
 		let temp_start = getpos('.')
-		" use matchit plugin to find end that match the begin.
-		norm %
+
+		let temp_end = temp_start
+		while 1
+			" use matchit plugin to find end that match the begin.
+			norm %
+
+			let cur_pos = getpos('.')
+			if cur_pos[1] < temp_end[1] || cur_pos[1] == temp_end[1] && cur_pos[2] < temp_end[2]
+				break
+			endif
+
+			let temp_end = cur_pos
+		endwhile
+
+		call setpos( '.', temp_end )
 
 		call search( s:FUNCTION_PATTERNS.end, 'eW' )
 		let temp_end = getpos('.')
