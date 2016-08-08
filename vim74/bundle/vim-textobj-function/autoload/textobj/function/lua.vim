@@ -24,7 +24,7 @@
 
 let s:FUNCTION_PATTERNS = {
 \   'begin': '\v(^|\s+)@<=function\s*\([^)]*\)',
-\   'end': '\v(^|\s)@<=end($|\s)@=',
+\   'end': '\v(^|\s)@<=end($|\s|\))@=',
 \ }
 
 
