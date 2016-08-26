@@ -98,7 +98,7 @@ function! s:select_i()
 	let ei = getpos('.')
 	" if is the EOL, move the upward line, else move to left.
 	if ei[2] == 1
-		norm! k$
+		exe "norm! \<BS>"
 	else
 		norm! h
 	endif
